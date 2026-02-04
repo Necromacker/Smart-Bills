@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltTrack | Deep Analytics</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="analytics.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ph-fill ph-lightning"></i>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Dashboard">
+                    <i class="ph-bold ph-squares-four"></i>
+                </a>
+                <a href="appliances.html" class="nav-item" title="Appliances">
+                    <i class="ph-bold ph-fan"></i>
+                </a>
+                <a href="analytics.html" class="nav-item active" title="Analytics">
+                    <i class="ph-bold ph-chart-line-up"></i>
+                </a>
+                <a href="budget.html" class="nav-item" title="Budget">
+                    <i class="ph-bold ph-wallet"></i>
+                </a>
+            </nav>
+            <div class="nav-bottom">
+                <a href="settings.html" class="nav-item" title="Settings">
+                    <i class="ph-bold ph-gear"></i>
+                </a>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">
+                    <i class="ph-bold ph-moon" id="theme-icon"></i>
+                </button>
+                <div class="privacy-note" title="Local Data Encryption Enabled">
+                    <i class="ph-bold ph-shield-check"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="top-header">
+                <div class="header-stats">
+                    <div class="stat-pill">
+                        <span class="label">Efficiency Score:</span>
+                        <span class="value green">84/100</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-outline">
+                        <i class="ph-bold ph-export"></i>
+                        Export CSV
+                    </button>
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <img src="https://ui-avatars.com/api/?name=User&background=FF9F40&color=fff" alt="User">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="analytics-view">
+                <div class="view-title">
+                    <div>
+                        <h1>Consumption Analytics</h1>
+                        <p>Detailed insights into your energy behavior</p>
+                    </div>
+                    <div class="time-filters">
+                        <button class="filter-btn">Week</button>
+                        <button class="filter-btn active">Month</button>
+                        <button class="filter-btn">Year</button>
+                    </div>
+                </div>
+
+                <div class="analytics-grid">
+                    <!-- Category Breakdown -->
+                    <div class="card chart-card">
+                        <div class="card-header">
+                            <h2>Usage by Category</h2>
+                            <p>Cooling is your primary consumer</p>
+                        </div>
+                        <div class="chart-box">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Usage Distribution -->
+                    <div class="card chart-card">
+                        <div class="card-header">
+                            <h2>Hourly Distribution</h2>
+                            <p>Usage peaks between 8 PM and 11 PM</p>
+                        </div>
+                        <div class="chart-box">
+                            <canvas id="distChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Peer Comparison -->
+                    <div class="card stats-card">
+                        <div class="card-header">
+                            <h2>Peer Comparison</h2>
+                            <p>How you rank against similar homes</p>
+                        </div>
+                        <div class="comparison-content">
+                            <div class="comp-item">
+                                <div class="comp-label">You</div>
+                                <div class="comp-bar-container">
+                                    <div class="comp-bar" style="width: 65%; background: var(--primary);"></div>
+                                    <span class="comp-val">380 kWh</span>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-label">Efficient Homes</div>
+                                <div class="comp-bar-container">
+                                    <div class="comp-bar" style="width: 50%; background: var(--text-green);"></div>
+                                    <span class="comp-val">290 kWh</span>
+                                </div>
+                            </div>
+                            <div class="comp-item">
+                                <div class="comp-label">Average</div>
+                                <div class="comp-bar-container">
+                                    <div class="comp-bar" style="width: 80%; background: var(--text-orange);"></div>
+                                    <span class="comp-val">450 kWh</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <p>You use <strong>15% less</strong> than average homes in your area.</p>
+                        </div>
+                    </div>
+
+                    <!-- Key Insights Card -->
+                    <div class="card insights-card">
+                        <h2>Key Insights</h2>
+                        <div class="insight-list">
+                            <div class="insight-entry">
+                                <i class="ph-bold ph-trend-up red"></i>
+                                <div>
+                                    <strong>Rising Trend</strong>
+                                    <span>AC usage is up 12% from last week due to heat wave.</span>
+                                </div>
+                            </div>
+                            <div class="insight-entry">
+                                <i class="ph-bold ph-lightbulb green"></i>
+                                <div>
+                                    <strong>Saving Opportunity</strong>
+                                    <span>Shift dishwasher use to morning hours to save ₹120.</span>
+                                </div>
+                            </div>
+                            <div class="insight-entry">
+                                <i class="ph-bold ph-check-circle-panel blue"></i>
+                                <div>
+                                    <strong>Efficiency Win</strong>
+                                    <span>New LED lighting reduced kitchen usage by 40%.</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="analytics.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltTrack | Budget & Billing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="budget.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ph-fill ph-lightning"></i>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Dashboard">
+                    <i class="ph-bold ph-squares-four"></i>
+                </a>
+                <a href="appliances.html" class="nav-item" title="Appliances">
+                    <i class="ph-bold ph-fan"></i>
+                </a>
+                <a href="analytics.html" class="nav-item" title="Analytics">
+                    <i class="ph-bold ph-chart-line-up"></i>
+                </a>
+                <a href="budget.html" class="nav-item active" title="Budget">
+                    <i class="ph-bold ph-wallet"></i>
+                </a>
+            </nav>
+            <div class="nav-bottom">
+                <a href="settings.html" class="nav-item" title="Settings">
+                    <i class="ph-bold ph-gear"></i>
+                </a>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">
+                    <i class="ph-bold ph-moon" id="theme-icon"></i>
+                </button>
+                <div class="privacy-note" title="Local Data Encryption Enabled">
+                    <i class="ph-bold ph-shield-check"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-stats">
+                    <div class="stat-pill">
+                        <span class="label">Wallet Balance:</span>
+                        <span class="value">₹ 1,240</span>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <div class="user-profile">
+                        <div class="avatar">
+                            <img src="https://ui-avatars.com/api/?name=User&background=FF9F40&color=fff" alt="User">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <section class="budget-view">
+                <div class="view-title">
+                    <div>
+                        <h1>Budget Awareness</h1>
+                        <p>Managing your electricity expenses</p>
+                    </div>
+                </div>
+
+                <div class="budget-grid">
+                    <!-- Set Budget Card -->
+                    <div class="card setter-card">
+                        <div class="card-header">
+                            <h2>Monthly Bill Limit</h2>
+                            <p>Drag to set your target budget</p>
+                        </div>
+                        <div class="budget-selector">
+                            <div class="budget-display">
+                                <span class="currency">₹</span>
+                                <span id="budgetValue">5,000</span>
+                            </div>
+                            <input type="range" id="budgetRange" min="1000" max="15000" step="500" value="5000">
+                        </div>
+                        <div class="budget-impact">
+                            <i class="ph-bold ph-info"></i>
+                            <p>With this budget, your daily limit is approx <strong>₹166/day</strong>.</p>
+                        </div>
+                        <button class="btn-primary" id="saveBudget">Update Target</button>
+                    </div>
+
+                    <!-- Bill Prediction -->
+                    <div class="card prediction-card-detailed">
+                        <h2>Bill Prediction</h2>
+                        <div class="prediction-main">
+                            <div class="expected">
+                                <span class="label">Expected Bill</span>
+                                <span class="val">₹ 4,250.00</span>
+                            </div>
+                            <div class="status-indicator safe">
+                                <i class="ph-bold ph-check-circle"></i>
+                                On Track
+                            </div>
+                        </div>
+                        <div class="breakdown">
+                            <div class="break-item">
+                                <span>Fixed Charges</span>
+                                <span>₹ 250</span>
+                            </div>
+                            <div class="break-item">
+                                <span>Energy Used (285 kWh)</span>
+                                <span>₹ 3,420</span>
+                            </div>
+                            <div class="break-item">
+                                <span>Taxes & Cess</span>
+                                <span>₹ 580</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Weekly Progress -->
+                    <div class="card progress-card">
+                        <h2>Weekly Progress</h2>
+                        <div class="weeks-list">
+                            <div class="week-row">
+                                <span class="week-label">Week 1</span>
+                                <div class="week-bar-bg">
+                                    <div class="week-bar" style="width: 85%; background: var(--text-green);"></div>
+                                </div>
+                                <span class="week-val">₹ 1,120</span>
+                            </div>
+                            <div class="week-row">
+                                <span class="week-label">Week 2</span>
+                                <div class="week-bar-bg">
+                                    <div class="week-bar" style="width: 95%; background: var(--text-orange);"></div>
+                                </div>
+                                <span class="week-val">₹ 1,280</span>
+                            </div>
+                            <div class="week-row">
+                                <span class="week-label">Week 3</span>
+                                <div class="week-bar-bg">
+                                    <div class="week-bar" style="width: 60%; background: var(--primary);"></div>
+                                </div>
+                                <span class="week-val">₹ 850</span>
+                            </div>
+                            <div class="week-row active">
+                                <span class="week-label">Week 4 (Current)</span>
+                                <div class="week-bar-bg">
+                                    <div class="week-bar animate" style="width: 45%; background: var(--secondary);">
+                                    </div>
+                                </div>
+                                <span class="week-val">₹ 480</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment History -->
+                    <div class="card history-card">
+                        <div class="card-header">
+                            <h2>Billing History</h2>
+                            <button class="text-link">Full History</button>
+                        </div>
+                        <div class="history-list">
+                            <div class="history-item">
+                                <div class="date-box">
+                                    <strong>JAN</strong>
+                                    <span>2024</span>
+                                </div>
+                                <div class="bill-info">
+                                    <strong>₹ 4,120.00</strong>
+                                    <span>342 units consumed</span>
+                                </div>
+                                <button class="btn-icon"><i class="ph-bold ph-download-simple"></i></button>
+                            </div>
+                            <div class="history-item">
+                                <div class="date-box">
+                                    <strong>DEC</strong>
+                                    <span>2023</span>
+                                </div>
+                                <div class="bill-info">
+                                    <strong>₹ 5,850.00</strong>
+                                    <span>480 units consumed</span>
+                                </div>
+                                <button class="btn-icon"><i class="ph-bold ph-download-simple"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="budget.js"></script>
+</body>
+
+</html>

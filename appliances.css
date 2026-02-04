@@ -1,0 +1,214 @@
+.appliances-view {
+    padding-bottom: 50px;
+}
+
+.view-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.room-filters {
+    display: flex;
+    gap: 8px;
+    background: var(--bg-pill);
+    padding: 4px;
+    border-radius: 12px;
+}
+
+.btn-add {
+    background: var(--accent-gradient);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(67, 24, 255, 0.3);
+}
+
+.appliances-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.appliance-card {
+    position: relative;
+    padding: 24px;
+    overflow: hidden;
+}
+
+.card-status {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--text-secondary);
+    opacity: 0.3;
+}
+
+.card-status.active {
+    background: var(--text-green);
+    opacity: 1;
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Toggle Switch Styles */
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 26px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-switch label {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--text-secondary);
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.toggle-switch label:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+.toggle-switch input:checked+label {
+    background-color: var(--text-green);
+}
+
+.toggle-switch input:checked+label:before {
+    transform: translateX(24px);
+}
+
+.toggle-switch input:disabled+label {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.app-details h3 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.app-details p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+}
+
+.app-metrics {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: var(--bg-main);
+    border-radius: 16px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.metric .label {
+    font-size: 11px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metric .val {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.sparkline-container {
+    height: 60px;
+    margin-bottom: 15px;
+}
+
+.app-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color);
+}
+
+.app-footer.warning {
+    color: var(--text-red);
+}
+
+.app-footer.success {
+    color: var(--text-green);
+}
+
+.app-footer.tip {
+    color: var(--primary);
+}
+
+.icon-box.machine {
+    background-color: #f3e8ff;
+    color: #a855f7;
+}
+
+.icon-box.tv {
+    background-color: #e0f2fe;
+    color: #0ea5e9;
+}
+
+@media (max-width: 768px) {
+    .view-title {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .view-actions {
+        width: 100%;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .room-filters {
+        overflow-x: auto;
+    }
+}

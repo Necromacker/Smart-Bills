@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoltTrack | Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="settings.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="ph-fill ph-lightning"></i>
+            </div>
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-item" title="Dashboard">
+                    <i class="ph-bold ph-squares-four"></i>
+                </a>
+                <a href="appliances.html" class="nav-item" title="Appliances">
+                    <i class="ph-bold ph-fan"></i>
+                </a>
+                <a href="analytics.html" class="nav-item" title="Analytics">
+                    <i class="ph-bold ph-chart-line-up"></i>
+                </a>
+                <a href="budget.html" class="nav-item" title="Budget">
+                    <i class="ph-bold ph-wallet"></i>
+                </a>
+            </nav>
+            <div class="nav-bottom">
+                <a href="settings.html" class="nav-item active" title="Settings">
+                    <i class="ph-bold ph-gear"></i>
+                </a>
+                <button id="theme-toggle" class="theme-toggle" title="Toggle Theme">
+                    <i class="ph-bold ph-moon" id="theme-icon"></i>
+                </button>
+                <div class="privacy-note" title="Local Data Encryption Enabled">
+                    <i class="ph-bold ph-shield-check"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-stats">
+                    <div class="stat-pill">
+                        <span class="label">System Status:</span>
+                        <span class="value green">Online</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="settings-view">
+                <div class="view-title">
+                    <h1>Settings</h1>
+                </div>
+
+                <div class="settings-container">
+                    <!-- Profile Section -->
+                    <div class="card settings-card">
+                        <h2>Personal Profile</h2>
+                        <div class="profile-edit">
+                            <div class="avatar-large">
+                                <img src="https://ui-avatars.com/api/?name=User&background=FF9F40&color=fff&size=128"
+                                    alt="User">
+                                <button class="btn-avatar-edit"><i class="ph-bold ph-pencil"></i></button>
+                            </div>
+                            <div class="profile-form">
+                                <div class="input-group">
+                                    <label>Display Name</label>
+                                    <input type="text" value="Rahul Sharma">
+                                </div>
+                                <div class="input-group">
+                                    <label>Email Address</label>
+                                    <input type="email" value="rahul.s@example.com">
+                                </div>
+                                <div class="input-group">
+                                    <label>Phone Number</label>
+                                    <input type="tel" value="+91 98765 43210">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Notifications Section -->
+                    <div class="card settings-card">
+                        <h2>Smart Notifications</h2>
+                        <div class="settings-list-detailed">
+                            <div class="setting-item-toggle">
+                                <div class="setting-info">
+                                    <strong>Daily Usage Limit</strong>
+                                    <span>Alert when daily consumption crosses safe limit</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="notify-daily" checked>
+                                    <label for="notify-daily"></label>
+                                </div>
+                            </div>
+                            <div class="setting-item-toggle">
+                                <div class="setting-info">
+                                    <strong>Weekly Summary</strong>
+                                    <span>Get a detailed report every Monday at 9 AM</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="notify-weekly" checked>
+                                    <label for="notify-weekly"></label>
+                                </div>
+                            </div>
+                            <div class="setting-item-toggle">
+                                <div class="setting-info">
+                                    <strong>Bill Predictions</strong>
+                                    <span>Warning if predicted bill exceeds budget by 10%</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="notify-prediction" checked>
+                                    <label for="notify-prediction"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Privacy Section -->
+                    <div class="card settings-card">
+                        <h2>Data & Privacy</h2>
+                        <div class="settings-list-detailed">
+                            <div class="setting-item-toggle">
+                                <div class="setting-info">
+                                    <strong>Local Data Encryption</strong>
+                                    <span>Encrypt all usage data stored on this device</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="encrypt-data" checked disabled>
+                                    <label for="encrypt-data"></label>
+                                </div>
+                            </div>
+                            <div class="setting-item-toggle">
+                                <div class="setting-info">
+                                    <strong>Cloud Sync</strong>
+                                    <span>Back up data to secure cloud for multi-device access</span>
+                                </div>
+                                <div class="toggle-switch">
+                                    <input type="checkbox" id="cloud-sync">
+                                    <label for="cloud-sync"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-danger">Delete All Usage History</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="settings.js"></script>
+</body>
+
+</html>
