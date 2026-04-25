@@ -1,249 +1,186 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Theme Management with localStorage
+    // Theme Management
     const themeToggle = document.getElementById('theme-toggle');
     const themeIcon = document.getElementById('theme-icon');
     const html = document.documentElement;
-
-    // Load saved theme or default to light
     const savedTheme = localStorage.getItem('volttrack-theme') || 'light';
     html.setAttribute('data-theme', savedTheme);
-    themeIcon.className = savedTheme === 'light' ? 'ph-bold ph-moon' : 'ph-bold ph-sun';
+    if (themeIcon) themeIcon.className = savedTheme === 'light' ? 'ph-bold ph-moon' : 'ph-bold ph-sun';
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = html.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        html.setAttribute('data-theme', newTheme);
-
-        // Save to localStorage
-        localStorage.setItem('volttrack-theme', newTheme);
-
-        // Update Icon
-        themeIcon.className = newTheme === 'light' ? 'ph-bold ph-moon' : 'ph-bold ph-sun';
-
-        // Update Chart colors
-        updateChartTheme(newTheme);
-    });
-
-    // Notification Panel Toggle
-    const notificationBtn = document.getElementById('notificationBtn');
-    const notificationPanel = document.getElementById('notificationPanel');
-    const profileBtn = document.getElementById('profileBtn');
-    const profileDropdown = document.getElementById('profileDropdown');
-
-    if (notificationBtn && notificationPanel) {
-        notificationBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            notificationPanel.classList.toggle('show');
-            if (profileDropdown) profileDropdown.classList.remove('show');
-        });
-
-        // Mark all as read
-        const markReadBtn = document.querySelector('.mark-read');
-        if (markReadBtn) {
-            markReadBtn.addEventListener('click', () => {
-                const unreadItems = document.querySelectorAll('.notification-item.unread');
-                unreadItems.forEach(item => item.classList.remove('unread'));
-                // Remove notification dot
-                notificationBtn.classList.remove('notification-dot');
-            });
-        }
-
-        // Click on notification item
-        const notifItems = document.querySelectorAll('.notification-item');
-        notifItems.forEach(item => {
-            item.addEventListener('click', () => {
-                item.classList.remove('unread');
-            });
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('volttrack-theme', newTheme);
+            if (themeIcon) themeIcon.className = newTheme === 'light' ? 'ph-bold ph-moon' : 'ph-bold ph-sun';
+            updateChartTheme(newTheme);
         });
     }
 
-    // Profile Dropdown Toggle
-    if (profileBtn && profileDropdown) {
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            profileDropdown.classList.toggle('show');
-            if (notificationPanel) notificationPanel.classList.remove('show');
+    // Chart.js
+    const usageChartEl = document.getElementById('usageChart');
+    let usageChart;
+    let currentFilter = '1M';
+
+    if (usageChartEl) {
+        const ctx = usageChartEl.getContext('2d');
+        usageChart = new Chart(ctx, {
+            type: 'line',
+            data: { labels: [], datasets: [{ label: 'Usage (kWh)', data: [], borderColor: '#4318ff', backgroundColor: 'rgba(67, 24, 255, 0.1)', fill: true, tension: 0.4, borderWidth: 3, pointRadius: 0 }] },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { display: false }, ticks: { color: '#a3aed0' } }, y: { grid: { color: 'rgba(163, 174, 208, 0.1)' }, ticks: { color: '#a3aed0' } } } }
         });
-
-        // Logout functionality
-        const logoutBtn = profileDropdown.querySelector('.logout');
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (confirm('Are you sure you want to logout?')) {
-                    alert('Logged out successfully!');
-                    // In a real app, redirect to login page
-                }
-            });
-        }
     }
-
-    // Close dropdowns when clicking outside
-    document.addEventListener('click', () => {
-        if (notificationPanel) notificationPanel.classList.remove('show');
-        if (profileDropdown) profileDropdown.classList.remove('show');
-    });
-
-    // Chart.js Implementation
-    const ctx = document.getElementById('usageChart').getContext('2d');
-
-    const chartData = {
-        labels: ['8 am', '10 am', '12 pm', '2 pm', '4 pm', '6 pm', '8 pm', '10 pm', '12 am', '2 am', '4 am', '6 am', '8 am'],
-        datasets: [{
-            label: 'Usage (kWh)',
-            data: [0.8, 1.2, 2.5, 3.8, 2.2, 1.8, 4.5, 6.2, 3.5, 1.2, 0.8, 0.6, 0.9],
-            borderColor: '#4318ff',
-            backgroundColor: (context) => {
-                const chart = context.chart;
-                const { ctx, chartArea } = chart;
-                if (!chartArea) return null;
-                const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
-                gradient.addColorStop(0, 'rgba(67, 24, 255, 0)');
-                gradient.addColorStop(1, 'rgba(67, 24, 255, 0.1)');
-                return gradient;
-            },
-            fill: true,
-            tension: 0.4,
-            borderWidth: 3,
-            pointRadius: 0,
-            pointHoverRadius: 6,
-            pointHoverBackgroundColor: '#4318ff',
-            pointHoverBorderColor: '#fff',
-            pointHoverBorderWidth: 3,
-        }]
-    };
-
-    const chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: { display: false },
-            tooltip: {
-                backgroundColor: '#1b2559',
-                titleColor: '#fff',
-                bodyColor: '#fff',
-                padding: 12,
-                displayColors: false,
-                callbacks: {
-                    label: (context) => `${context.parsed.y} kWh`
-                }
-            }
-        },
-        scales: {
-            x: {
-                grid: { display: false },
-                ticks: { color: '#a3aed0', font: { family: 'Outfit', size: 12 } }
-            },
-            y: {
-                grid: { color: 'rgba(163, 174, 208, 0.1)', drawBorder: false },
-                ticks: { color: '#a3aed0', font: { family: 'Outfit', size: 12 } }
-            }
-        },
-        interaction: {
-            intersect: false,
-            mode: 'index',
-        }
-    };
-
-    let usageChart = new Chart(ctx, {
-        type: 'line',
-        data: chartData,
-        options: chartOptions
-    });
 
     function updateChartTheme(theme) {
-        const textColor = theme === 'light' ? '#a3aed0' : '#a3aed0';
-        const gridColor = theme === 'light' ? 'rgba(163, 174, 208, 0.1)' : 'rgba(163, 174, 208, 0.05)';
-
-        usageChart.options.scales.x.ticks.color = textColor;
-        usageChart.options.scales.y.ticks.color = textColor;
-        usageChart.options.scales.y.grid.color = gridColor;
+        if (!usageChart) return;
+        usageChart.options.scales.x.ticks.color = '#a3aed0';
+        usageChart.options.scales.y.ticks.color = '#a3aed0';
         usageChart.update();
     }
 
-    // Time Filter Interaction
+    // Time Filter Listeners
     const filterBtns = document.querySelectorAll('.filter-btn');
     filterBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             filterBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
+            currentFilter = btn.textContent.trim();
+            updateDashboardUI();
+        });
+    });
 
-            const timeline = btn.textContent.trim();
-            let newLabels, newData;
-
-            switch (timeline) {
-                case '1D':
-                    newLabels = ['12am', '2am', '4am', '6am', '8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm'];
-                    newData = Array.from({ length: 12 }, () => (Math.random() * 5 + 1).toFixed(1));
-                    break;
-                case '1W':
-                    newLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-                    newData = Array.from({ length: 7 }, () => (Math.random() * 15 + 10).toFixed(1));
-                    break;
-                case '1M':
-                    newLabels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
-                    newData = Array.from({ length: 4 }, () => (Math.random() * 80 + 50).toFixed(1));
-                    break;
-                case '1Y':
-                    newLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-                    newData = Array.from({ length: 12 }, () => (Math.random() * 300 + 200).toFixed(1));
-                    break;
-                default:
-                    newLabels = ['8 am', '10 am', '12 pm', '2 pm', '4 pm', '6 pm', '8 pm', '10 pm', '12 am', '2 am', '4 am', '6 am', '8 am'];
-                    newData = Array.from({ length: 13 }, () => (Math.random() * 5 + 1).toFixed(1));
+    // Reset Buttons
+    const resetAllBtn = document.getElementById('resetAllBtn');
+    if (resetAllBtn) {
+        resetAllBtn.addEventListener('click', () => {
+            if (confirm('Are you sure? This will delete all analyzed bills, appliances, and settings.')) {
+                localStorage.removeItem('volttrack-last-bill');
+                localStorage.removeItem('volttrack-appliances');
+                localStorage.removeItem('volttrack-budget');
+                localStorage.removeItem('volttrack-bill-history');
+                location.reload();
             }
-
-            usageChart.data.labels = newLabels;
-            usageChart.data.datasets[0].data = newData;
-            usageChart.update();
-        });
-    });
-
-    // Navigation Item Interaction (Visual update)
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            if (item.id === 'theme-toggle' || item.getAttribute('href') === '#') return;
-            // The browser will handle the redirect naturally since we aren't calling e.preventDefault()
-        });
-    });
-
-    // Simulate "Live" updates
-    setInterval(() => {
-        const loadValue = document.querySelector('.header-stats .stat-pill:first-child .value');
-        if (loadValue) {
-            const currentLoad = (Math.random() * 1.5 + 1.5).toFixed(1);
-            loadValue.textContent = `${currentLoad} kW`;
-        }
-    }, 5000);
-
-    // Search Functionality
-    const searchInput = document.querySelector('.search-bar input');
-    if (searchInput) {
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const tableRows = document.querySelectorAll('.table-row');
-
-            tableRows.forEach(row => {
-                const applianceName = row.querySelector('.appliance-info strong')?.textContent.toLowerCase() || '';
-                const applianceLocation = row.querySelector('.appliance-info span')?.textContent.toLowerCase() || '';
-
-                if (applianceName.includes(searchTerm) || applianceLocation.includes(searchTerm)) {
-                    row.style.display = 'grid';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
         });
     }
 
-    // Budget Setter
-    const budgetBtn = document.getElementById('set-budget-btn');
-    budgetBtn.addEventListener('click', () => {
-        const newLimit = prompt('Enter your monthly budget limit (₹):', '5000');
-        if (newLimit && !isNaN(newLimit)) {
-            document.querySelector('.budget-status span:last-child').textContent = `Budget: ₹${parseInt(newLimit).toLocaleString()}`;
-            alert('Monthly budget limit updated successfully!');
+    function updateDashboardUI() {
+        const lastBill = JSON.parse(localStorage.getItem('volttrack-last-bill'));
+        const appliances = JSON.parse(localStorage.getItem('volttrack-appliances') || '[]');
+        const budget = parseFloat(localStorage.getItem('volttrack-budget') || 5000);
+        const prediction = predictFutureBill();
+
+        const activeAppliances = appliances.filter(a => a.active);
+        const totalActiveUsage = activeAppliances.reduce((acc, a) => acc + (parseFloat(a.usage) || 0), 0);
+
+        // Header & Stats
+        const currentLoadPill = document.querySelectorAll('.stat-pill .value')[0];
+        const dailyAvgPill = document.querySelectorAll('.stat-pill .value')[1];
+        const savingsPill = document.querySelectorAll('.stat-pill .value')[2];
+        const amountPrediction = document.querySelector('.amount-prediction');
+        const budgetSpentSpan = document.querySelector('.budget-status span:first-child');
+        const budgetLimitSpan = document.querySelector('.budget-status span:last-child');
+        const progressBar = document.querySelector('.progress-bar');
+        
+        if (amountPrediction) amountPrediction.textContent = `₹ ${prediction ? prediction.amount : '---'}`;
+
+        if (lastBill) {
+            if (currentLoadPill) currentLoadPill.textContent = `${totalActiveUsage || lastBill.units_consumed} kWh`;
+            if (dailyAvgPill) dailyAvgPill.textContent = `${((totalActiveUsage || lastBill.units_consumed) / 30).toFixed(1)} kWh`;
+            const savings = budget - lastBill.total_amount;
+            if (savingsPill) {
+                savingsPill.textContent = `₹ ${savings.toFixed(0)}`;
+                savingsPill.className = `value ${savings >= 0 ? 'green' : 'red'}`;
+            }
+            if (budgetSpentSpan) budgetSpentSpan.textContent = `₹${lastBill.total_amount.toLocaleString()} spent`;
+            if (budgetLimitSpan) budgetLimitSpan.textContent = `Budget: ₹${parseInt(budget).toLocaleString()}`;
+            if (progressBar && prediction) {
+                const progress = (prediction.amount / budget) * 100;
+                progressBar.style.width = `${Math.min(progress, 100)}%`;
+                progressBar.style.backgroundColor = progress > 100 ? 'var(--text-red)' : 'white';
+            }
+        } else {
+            if (budgetSpentSpan) budgetSpentSpan.textContent = `₹0 spent`;
+            if (budgetLimitSpan) budgetLimitSpan.textContent = `Budget: ₹${parseInt(budget).toLocaleString()}`;
+            if (progressBar) progressBar.style.width = '0%';
         }
-    });
+
+        // Appliance Table & Efficiency
+        const applianceTable = document.querySelector('.appliance-table');
+        let alertsCount = 0;
+        let alertsHTML = '';
+        let suggestionsHTML = '';
+
+        if (applianceTable) {
+            const rows = applianceTable.querySelectorAll('.table-row, .empty-table-state');
+            rows.forEach(row => row.remove());
+            appliances.forEach(app => {
+                const usage = parseFloat(app.usage) || 0;
+                let efficiency = usage > 200 ? 'Low' : usage > 100 ? 'Moderate' : 'High';
+                let effClass = usage > 200 ? 'low' : usage > 100 ? 'medium' : 'high';
+                const row = document.createElement('div');
+                row.className = 'table-row';
+                row.innerHTML = `<div class="appliance-info"><div class="icon-box ${app.colorClass}"><i class="${app.iconClass}"></i></div><div class="details"><strong>${app.name}</strong><span>${app.room}</span></div></div><div class="status-badge ${app.active ? 'on' : 'off'}">${app.active ? 'Active' : 'Off'}</div><span>${usage} kWh/m</span><div class="efficiency-pill ${effClass}">${efficiency}</div><span class="${efficiency === 'Low' && app.active ? 'alert-warning' : 'alert-success'}">${(efficiency === 'Low' && app.active) ? 'High Load' : 'Optimal'}</span>`;
+                applianceTable.appendChild(row);
+
+                if (app.active) {
+                    if (efficiency === 'Low') {
+                        alertsCount++;
+                        alertsHTML += `<div class="alert-entry warning"><i class="ph-bold ph-warning"></i><div class="alert-content"><strong>${app.name} Efficiency</strong><span>High load (${usage} kWh/m)</span></div></div>`;
+                        suggestionsHTML += `<div class="suggestion-item"><div class="dot yellow"></div><p>Upgrade <strong>${app.name}</strong> for better efficiency.</p></div>`;
+                    } else if (efficiency === 'Moderate') {
+                        suggestionsHTML += `<div class="suggestion-item"><div class="dot blue"></div><p>Optimize <strong>${app.name}</strong> usage.</p></div>`;
+                    }
+                }
+            });
+        }
+
+        // Budget Alert
+        if (lastBill && budget < lastBill.total_amount) {
+            alertsCount++;
+            alertsHTML += `<div class="alert-entry critical"><i class="ph-bold ph-warning-circle" style="color: var(--text-red);"></i><div class="alert-content"><strong>Budget Exceeded</strong><span>₹${lastBill.total_amount} exceeds limit.</span></div></div>`;
+            suggestionsHTML += `<div class="suggestion-item"><div class="dot blue"></div><p>Your bill is <strong>₹${(lastBill.total_amount - budget).toFixed(0)}</strong> over budget. Increase budget or reduce usage.</p></div>`;
+        }
+
+        // Category Breakdown Sync
+        if (lastBill) {
+            const categories = { Cooling: 0, Lighting: 0, Appliances: 0, Kitchen: 0, Others: 0 };
+            activeAppliances.forEach(app => {
+                const usage = parseFloat(app.usage) || 0;
+                const name = app.name.toLowerCase();
+                if (name.includes('ac') || name.includes('fan')) categories.Cooling += usage;
+                else if (name.includes('light')) categories.Lighting += usage;
+                else if (name.includes('fridge') || name.includes('micro')) categories.Kitchen += usage;
+                else categories.Appliances += usage;
+            });
+            lastBill.category_breakdown = categories;
+            localStorage.setItem('volttrack-last-bill', JSON.stringify(lastBill));
+        }
+
+        // Graph Update
+        if (lastBill && usageChart) {
+            const totalUnits = totalActiveUsage || lastBill.units_consumed;
+            let labels = [], data = [];
+            if (currentFilter === '1D') { labels = ['8am', '10am', '12pm', '2pm', '4pm', '6pm', '8pm', '10pm', '12am', '2am', '4am', '6am', '8am']; data = Array.from({ length: 13 }, (_, i) => ((totalUnits / 30 / 13) * (Math.exp(-Math.pow(i - 6, 2) / 8) + 0.5)).toFixed(1)); }
+            else if (currentFilter === '1W') { labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']; data = Array.from({ length: 7 }, () => ((totalUnits / 30) * (0.8 + Math.random() * 0.4)).toFixed(1)); }
+            else if (currentFilter === '1M') { labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; data = Array.from({ length: 4 }, () => ((totalUnits / 4) * (0.9 + Math.random() * 0.2)).toFixed(1)); }
+            else if (currentFilter === '1Y') { labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']; data = Array.from({ length: 12 }, () => ((totalUnits) * (0.7 + Math.random() * 0.6)).toFixed(1)); }
+            usageChart.data.labels = labels;
+            usageChart.data.datasets[0].data = data;
+            usageChart.update();
+            const amountDisplay = document.querySelector('.card-value-main .amount');
+            if (amountDisplay) amountDisplay.textContent = (currentFilter === '1D' ? totalUnits / 30 : totalUnits).toFixed(0);
+        }
+
+        // UI Lists
+        const suggestionsList = document.getElementById('suggestionsList');
+        const alertsList = document.getElementById('alertsList');
+        const alertBadge = document.querySelector('.badge');
+        if (suggestionsList) suggestionsList.innerHTML = suggestionsHTML || '<div class="empty-state">No suggestions.</div>';
+        if (alertsList) alertsList.innerHTML = alertsHTML || '<div class="empty-state">No active alerts.</div>';
+        if (alertBadge) alertBadge.textContent = `${alertsCount} New`;
+    }
+
+    updateDashboardUI();
+    window.addEventListener('storage', updateDashboardUI);
 });

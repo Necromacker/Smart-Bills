@@ -55,11 +55,11 @@
                 <div class="header-stats">
                     <div class="stat-pill">
                         <span class="label">Connected:</span>
-                        <span class="value">12 Devices</span>
+                        <span class="value">---</span>
                     </div>
                     <div class="stat-pill">
-                        <span class="label">Wasting:</span>
-                        <span class="value red">2</span>
+                        <span class="label">Status:</span>
+                        <span class="value">---</span>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -79,157 +79,20 @@
                 <div class="view-title">
                     <div>
                         <h1>Manage Appliances</h1>
-                        <p>Total daily estimate: ₹142.50</p>
-                    </div>
-                    <div class="view-actions">
-                        <div class="room-filters">
-                            <button class="filter-btn active">All Rooms</button>
-                            <button class="filter-btn">Kitchen</button>
-                            <button class="filter-btn">Living Room</button>
-                            <button class="filter-btn">Bedroom</button>
-                        </div>
-                        <button class="btn-add">
-                            <i class="ph-bold ph-plus"></i>
-                            Add Device
-                        </button>
+                        <p>Total monthly estimate: ₹0.00</p>
                     </div>
                 </div>
 
                 <div class="appliances-grid" id="appliancesGrid">
-                    <!-- Appliance Card: AC -->
-                    <div class="card appliance-card" data-room="Living Room">
-                        <div class="card-status active"></div>
-                        <div class="app-header">
-                            <div class="icon-box ac"><i class="ph-fill ph-snowflake"></i></div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="ac-toggle" checked>
-                                <label for="ac-toggle"></label>
-                            </div>
-                        </div>
-                        <div class="app-details">
-                            <h3>Air Conditioner</h3>
-                            <p>Living Room • Model v2.4</p>
-                        </div>
-                        <div class="app-metrics">
-                            <div class="metric">
-                                <span class="label">Usage</span>
-                                <span class="val">6.4 kWh</span>
-                            </div>
-                            <div class="metric">
-                                <span class="label">Cost/Mo</span>
-                                <span class="val">₹1,920</span>
-                            </div>
-                        </div>
-                        <div class="sparkline-container">
-                            <canvas id="sparkline-ac"></canvas>
-                        </div>
-                        <div class="app-footer warning">
-                            <i class="ph-bold ph-warning"></i>
-                            <span>Running unusually long (8h+)</span>
-                        </div>
-                    </div>
-
-                    <!-- Appliance Card: Fridge -->
-                    <div class="card appliance-card" data-room="Kitchen">
-                        <div class="card-status active"></div>
-                        <div class="app-header">
-                            <div class="icon-box fridge"><i class="ph-fill ph-thermometer-cold"></i></div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="fridge-toggle" checked disabled>
-                                <label for="fridge-toggle"></label>
-                            </div>
-                        </div>
-                        <div class="app-details">
-                            <h3>Refrigerator</h3>
-                            <p>Kitchen • Always On</p>
-                        </div>
-                        <div class="app-metrics">
-                            <div class="metric">
-                                <span class="label">Usage</span>
-                                <span class="val">2.1 kWh</span>
-                            </div>
-                            <div class="metric">
-                                <span class="label">Cost/Mo</span>
-                                <span class="val">₹630</span>
-                            </div>
-                        </div>
-                        <div class="sparkline-container">
-                            <canvas id="sparkline-fridge"></canvas>
-                        </div>
-                        <div class="app-footer success">
-                            <i class="ph-bold ph-check-circle"></i>
-                            <span>Normal operation</span>
-                        </div>
-                    </div>
-
-                    <!-- Appliance Card: Washing Machine -->
-                    <div class="card appliance-card" data-room="Kitchen">
-                        <div class="card-status"></div>
-                        <div class="app-header">
-                            <div class="icon-box machine"><i class="ph-fill ph-washing-machine"></i></div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="wm-toggle">
-                                <label for="wm-toggle"></label>
-                            </div>
-                        </div>
-                        <div class="app-details">
-                            <h3>Washing Machine</h3>
-                            <p>Kitchen • Pending Cycle</p>
-                        </div>
-                        <div class="app-metrics">
-                            <div class="metric">
-                                <span class="label">Usage</span>
-                                <span class="val">0.0 kWh</span>
-                            </div>
-                            <div class="metric">
-                                <span class="label">Last Run</span>
-                                <span class="val">2 days ago</span>
-                            </div>
-                        </div>
-                        <div class="sparkline-container">
-                            <canvas id="sparkline-wm"></canvas>
-                        </div>
-                        <div class="app-footer tip">
-                            <i class="ph-bold ph-info"></i>
-                            <span>Best run at 10 PM</span>
-                        </div>
-                    </div>
-
-                    <!-- Appliance Card: Smart TV -->
-                    <div class="card appliance-card" data-room="Living Room">
-                        <div class="card-status active"></div>
-                        <div class="app-header">
-                            <div class="icon-box tv"><i class="ph-fill ph-television"></i></div>
-                            <div class="toggle-switch">
-                                <input type="checkbox" id="tv-toggle" checked>
-                                <label for="tv-toggle"></label>
-                            </div>
-                        </div>
-                        <div class="app-details">
-                            <h3>Smart TV 65"</h3>
-                            <p>Living Room • Netflix Active</p>
-                        </div>
-                        <div class="app-metrics">
-                            <div class="metric">
-                                <span class="label">Usage</span>
-                                <span class="val">0.4 kWh</span>
-                            </div>
-                            <div class="metric">
-                                <span class="label">Cost/Mo</span>
-                                <span class="val">₹120</span>
-                            </div>
-                        </div>
-                        <div class="sparkline-container">
-                            <canvas id="sparkline-tv"></canvas>
-                        </div>
-                        <div class="app-footer">
-                            <span>High efficiency model</span>
-                        </div>
+                    <!-- Dynamic Appliance Cards will be injected here -->
+                    <div class="empty-state" style="grid-column: 1/-1; padding: 50px; text-align: center; color: var(--text-secondary);">
+                        Initializing appliances...
                     </div>
                 </div>
             </section>
         </main>
     </div>
+    <script src="billAnalyzer.js"></script>
     <script src="appliances.js"></script>
 </body>
 

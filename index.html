@@ -4,14 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VoltTrack | Smart Electricity Dashboard</title>
-    <!-- Google Fonts -->
+    <title>VoltTrack | Smart Energy Management</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Phosphor Icons -->
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="index.css">
 </head>
@@ -57,22 +54,23 @@
                 <div class="header-stats">
                     <div class="stat-pill">
                         <span class="label">Current Load:</span>
-                        <span class="value">2.4 kW</span>
+                        <span class="value">---</span>
                     </div>
                     <div class="stat-pill">
                         <span class="label">Daily Avg:</span>
-                        <span class="value">12.8 kWh</span>
+                        <span class="value">---</span>
                     </div>
                     <div class="stat-pill">
                         <span class="label">Savings:</span>
-                        <span class="value green">+15%</span>
+                        <span class="value">---</span>
                     </div>
                 </div>
+
                 <div class="header-actions">
                     <div class="search-bar">
                         <i class="ph-bold ph-magnifying-glass"></i>
-                        <input type="text" placeholder="Search appliances...">
-                        <span class="shortcut">⌘ K</span>
+                        <input type="text" placeholder="Search analytics...">
+                        <span class="shortcut">⌘K</span>
                     </div>
                     <div class="user-profile">
                         <div class="notification-wrapper">
@@ -80,31 +78,23 @@
                             <div class="notification-panel" id="notificationPanel">
                                 <div class="notification-header">
                                     <h3>Notifications</h3>
-                                    <button class="mark-read">Mark all read</button>
+                                    <button class="mark-read">Mark all as read</button>
                                 </div>
                                 <div class="notification-list">
                                     <div class="notification-item unread">
-                                        <i class="ph-bold ph-warning" style="color: var(--text-red);"></i>
+                                        <i class="ph-fill ph-warning-circle" style="color: var(--text-red);"></i>
                                         <div class="notif-content">
-                                            <strong>High Usage Alert</strong>
-                                            <p>Daily limit exceeded by 10%</p>
-                                            <span class="notif-time">5 min ago</span>
-                                        </div>
-                                    </div>
-                                    <div class="notification-item unread">
-                                        <i class="ph-bold ph-info" style="color: var(--primary);"></i>
-                                        <div class="notif-content">
-                                            <strong>Budget Update</strong>
-                                            <p>You're at 85% of weekly budget</p>
-                                            <span class="notif-time">1 hour ago</span>
+                                            <strong>Usage Spike Detected</strong>
+                                            <p>Your AC consumption is 15% higher than usual this afternoon.</p>
+                                            <span class="notif-time">2 mins ago</span>
                                         </div>
                                     </div>
                                     <div class="notification-item">
-                                        <i class="ph-bold ph-check-circle" style="color: var(--text-green);"></i>
+                                        <i class="ph-fill ph-check-circle" style="color: var(--text-green);"></i>
                                         <div class="notif-content">
-                                            <strong>Energy Saved</strong>
-                                            <p>You saved ₹120 this week!</p>
-                                            <span class="notif-time">2 hours ago</span>
+                                            <strong>Budget Goal Reached</strong>
+                                            <p>Congratulations! You stayed under your energy budget last week.</p>
+                                            <span class="notif-time">5 hours ago</span>
                                         </div>
                                     </div>
                                 </div>
@@ -112,35 +102,22 @@
                         </div>
                         <div class="profile-wrapper">
                             <div class="avatar" id="profileBtn">
-                                <img src="https://ui-avatars.com/api/?name=User&background=FF9F40&color=fff" alt="User">
+                                <img src="https://ui-avatars.com/api/?name=User&background=4318ff&color=fff" alt="User">
                             </div>
                             <div class="profile-dropdown" id="profileDropdown">
                                 <div class="profile-info">
-                                    <img src="https://ui-avatars.com/api/?name=User&background=FF9F40&color=fff"
-                                        alt="User">
+                                    <img src="https://ui-avatars.com/api/?name=User&background=4318ff&color=fff" alt="User">
                                     <div>
-                                        <strong>Rahul Sharma</strong>
-                                        <span>rahul.s@example.com</span>
+                                        <strong>User</strong>
+                                        <span>user@example.com</span>
                                     </div>
                                 </div>
                                 <div class="profile-menu">
-                                    <a href="settings.html">
-                                        <i class="ph-bold ph-user"></i>
-                                        My Profile
-                                    </a>
-                                    <a href="budget.html">
-                                        <i class="ph-bold ph-wallet"></i>
-                                        Billing
-                                    </a>
-                                    <a href="settings.html">
-                                        <i class="ph-bold ph-gear"></i>
-                                        Settings
-                                    </a>
+                                    <a href="#"><i class="ph-bold ph-user"></i> My Profile</a>
+                                    <a href="budget.html"><i class="ph-bold ph-wallet"></i> Billing Details</a>
+                                    <a href="#"><i class="ph-bold ph-shield"></i> Security</a>
                                     <hr>
-                                    <a href="#" class="logout">
-                                        <i class="ph-bold ph-sign-out"></i>
-                                        Logout
-                                    </a>
+                                    <a href="#" class="logout"><i class="ph-bold ph-sign-out"></i> Log Out</a>
                                 </div>
                             </div>
                         </div>
@@ -148,180 +125,113 @@
                 </div>
             </header>
 
-            <section class="dashboard-grid">
-                <!-- Left Column -->
-                <div class="dashboard-left">
-                    <div class="view-title">
-                        <h1>Electricity Overview</h1>
-                        <div class="time-filters">
-                            <button class="filter-btn active">1D</button>
-                            <button class="filter-btn">1W</button>
-                            <button class="filter-btn">1M</button>
-                            <button class="filter-btn">1Y</button>
-                        </div>
-                    </div>
-
-                    <!-- Usage Chart Card -->
-                    <div class="card usage-card">
-                        <div class="card-header">
-                            <div class="card-title">
-                                <h2>Total Consumption</h2>
-                                <p>Units (kWh) consumed today</p>
-                            </div>
-                            <div class="card-value-main">
-                                <span class="currency">kWh</span>
-                                <span class="amount">14.2</span>
-                                <span class="trend up"><i class="ph-bold ph-trend-up"></i> 2.4%</span>
-                            </div>
-                        </div>
-                        <div class="chart-container">
-                            <canvas id="usageChart"></canvas>
-                        </div>
-                    </div>
-
-                    <!-- Appliances Table/Grid -->
-                    <div class="card appliance-list-card">
-                        <div class="card-header">
-                            <h2>Appliance Breakdown</h2>
-                            <button class="text-link">View All</button>
-                        </div>
-                        <div class="appliance-table">
-                            <div class="table-header">
-                                <span>Appliance</span>
-                                <span>Status</span>
-                                <span>Daily Usage</span>
-                                <span>Efficiency</span>
-                                <span>Alerts</span>
-                            </div>
-                            <div class="table-row">
-                                <div class="appliance-info">
-                                    <div class="icon-box fan"><i class="ph-fill ph-fan"></i></div>
-                                    <div class="details">
-                                        <strong>Ceiling Fan (M)</strong>
-                                        <span>Bedroom 1</span>
-                                    </div>
-                                </div>
-                                <div class="status-badge on">Active</div>
-                                <span>1.2 kWh</span>
-                                <div class="efficiency-pill high">High</div>
-                                <span class="alert-none">—</span>
-                            </div>
-                            <div class="table-row">
-                                <div class="appliance-info">
-                                    <div class="icon-box ac"><i class="ph-fill ph-snowflake"></i></div>
-                                    <div class="details">
-                                        <strong>Air Conditioner</strong>
-                                        <span>Living Room</span>
-                                    </div>
-                                </div>
-                                <div class="status-badge on">Active</div>
-                                <span>6.4 kWh</span>
-                                <div class="efficiency-pill low">Low</div>
-                                <span class="alert-warning"><i class="ph-fill ph-warning-circle"></i> Running 8h+</span>
-                            </div>
-                            <div class="table-row">
-                                <div class="appliance-info">
-                                    <div class="icon-box fridge"><i class="ph-fill ph-thermometer-cold"></i></div>
-                                    <div class="details">
-                                        <strong>Refrigerator</strong>
-                                        <span>Kitchen</span>
-                                    </div>
-                                </div>
-                                <div class="status-badge on">Active</div>
-                                <span>2.1 kWh</span>
-                                <div class="efficiency-pill medium">Medium</div>
-                                <span class="alert-none">—</span>
-                            </div>
-                            <div class="table-row">
-                                <div class="appliance-info">
-                                    <div class="icon-box lights"><i class="ph-fill ph-lightbulb"></i></div>
-                                    <div class="details">
-                                        <strong>Smart Lighting</strong>
-                                        <span>All Rooms</span>
-                                    </div>
-                                </div>
-                                <div class="status-badge off">Off</div>
-                                <span>0.8 kWh</span>
-                                <div class="efficiency-pill high">High</div>
-                                <span class="alert-success"><i class="ph-fill ph-check-circle"></i> Saving</span>
-                            </div>
-                        </div>
+            <!-- Dashboard Content -->
+            <section class="dashboard-view">
+                <div class="view-title">
+                    <h1>Energy Dashboard</h1>
+                    <div class="time-filters">
+                        <button class="filter-btn">1D</button>
+                        <button class="filter-btn">1W</button>
+                        <button class="filter-btn active">1M</button>
+                        <button class="filter-btn">1Y</button>
                     </div>
                 </div>
 
-                <!-- Right Column -->
-                <div class="dashboard-right">
-                    <!-- Bill Prediction Card -->
-                    <div class="card action-card">
-                        <h3>Monthly Bill Prediction</h3>
-                        <div class="prediction-info">
-                            <div class="label">Expected Bill Amount</div>
-                            <div class="amount-prediction">₹ 4,250.00</div>
-                            <div class="progress-container">
-                                <div class="progress-bar" style="width: 65%;"></div>
+                <div class="dashboard-grid">
+                    <!-- Left Column -->
+                    <div class="dashboard-left">
+                        <!-- Main Usage Chart -->
+                        <div class="card chart-main">
+                            <div class="card-header">
+                                <div class="card-title">
+                                    <h2>Total Consumption</h2>
+                                    <p>Units (kWh) consumed in 1M</p>
+                                </div>
+                                <div class="card-value-main">
+                                    <span class="amount">---</span>
+                                    <span class="currency">kWh</span>
+                                    <span class="trend down"><i class="ph-bold ph-trend-down"></i> -8%</span>
+                                </div>
                             </div>
-                            <div class="budget-status">
-                                <span>₹2,800 spent</span>
-                                <span>Budget: ₹5,000</span>
+                            <div class="chart-container">
+                                <canvas id="usageChart"></canvas>
                             </div>
                         </div>
-                        <p class="privacy-small">Data is stored locally and encrypted.</p>
-                        <button class="btn-primary" id="set-budget-btn">Set Budget Limit</button>
-                    </div>
 
-                    <!-- Energy Saving Suggestions -->
-                    <div class="card side-card">
-                        <div class="card-header">
-                            <h3>Smart Suggestions</h3>
-                            <i class="ph-bold ph-lightbulb-filament"></i>
-                        </div>
-                        <div class="suggestions-list">
-                            <div class="suggestion-item">
-                                <div class="dot orange"></div>
-                                <p>Reducing AC usage by <strong>1 hour/day</strong> can save approx
-                                    <strong>₹450/month</strong>.
-                                </p>
+                        <!-- Appliances Table/Grid -->
+                        <div class="card appliance-list-card">
+                            <div class="card-header">
+                                <h2>Appliance Breakdown</h2>
+                                <a href="appliances.html" class="text-link">View All</a>
                             </div>
-                            <div class="suggestion-item">
-                                <div class="dot blue"></div>
-                                <p>AC is running but motion sensors detect <strong>no one in the living room</strong>.
-                                </p>
-                            </div>
-                            <div class="suggestion-item">
-                                <div class="dot green"></div>
-                                <p>Shift washing machine usage to <strong>off-peak hours</strong> (10 PM - 6 AM) to save
-                                    12%.</p>
+                            <div class="appliance-table">
+                                <div class="table-header">
+                                    <span>Appliance</span>
+                                    <span>Status</span>
+                                    <span>Monthly Usage</span>
+                                    <span>Efficiency</span>
+                                    <span>Alerts</span>
+                                </div>
+                                <!-- Table rows will be injected by index.js -->
                             </div>
                         </div>
                     </div>
 
-                    <!-- Smart Alerts -->
-                    <div class="card side-card">
-                        <div class="card-header">
-                            <h3>Recent Alerts</h3>
-                            <span class="badge">3 New</span>
+                    <!-- Right Column -->
+                    <div class="dashboard-right">
+                        <!-- Bill Prediction Card -->
+                        <div class="card action-card">
+                            <h3>Monthly Bill Prediction</h3>
+                            <div class="prediction-info">
+                                <div class="label">Expected Bill Amount</div>
+                                <div class="amount-prediction">₹ ---</div>
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: 0%;"></div>
+                                </div>
+                                <div class="budget-status">
+                                    <span>₹0 spent</span>
+                                    <span>Budget: ₹---</span>
+                                </div>
+                            </div>
+                            <button class="btn-primary" id="set-budget-btn">Set Budget Limit</button>
                         </div>
-                        <div class="alerts-list">
-                            <div class="alert-entry warning">
-                                <i class="ph-bold ph-warning"></i>
-                                <div class="alert-content">
-                                    <strong>High Usage Alert</strong>
-                                    <span>Daily limit (15kWh) exceeded by 10%.</span>
-                                </div>
+
+                        <!-- Energy Saving Suggestions -->
+                        <div class="card side-card">
+                            <div class="card-header">
+                                <h3>Smart Suggestions</h3>
+                                <i class="ph-bold ph-lightbulb"></i>
                             </div>
-                            <div class="alert-entry info">
-                                <i class="ph-bold ph-info"></i>
-                                <div class="alert-content">
-                                    <strong>Budget Update</strong>
-                                    <span>You are at 85% of your weekly budget.</span>
-                                </div>
+                            <div class="suggestions-list" id="suggestionsList">
+                                <div class="empty-state">No suggestions.</div>
                             </div>
+                        </div>
+
+
+
+                        <!-- Smart Alerts -->
+                        <div class="card side-card">
+                            <div class="card-header">
+                                <h3>Recent Alerts</h3>
+                                <span class="badge">0 New</span>
+                            </div>
+                            <div class="alerts-list" id="alertsList">
+                                <div class="empty-state">No recent alerts.</div>
+                            </div>
+                        </div>
+
+                        <!-- Data Management -->
+                        <div style="text-align: center; margin-top: 10px;">
+                            <button class="btn-danger" id="resetAllBtn" style="width: 100%;">
+                                <i class="ph-bold ph-trash"></i> Reset All Data
+                            </button>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
+    <script src="billAnalyzer.js"></script>
     <script src="index.js"></script>
 </body>
 

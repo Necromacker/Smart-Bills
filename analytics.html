@@ -55,7 +55,7 @@
                 <div class="header-stats">
                     <div class="stat-pill">
                         <span class="label">Efficiency Score:</span>
-                        <span class="value green">84/100</span>
+                        <span class="value">---</span>
                     </div>
                 </div>
                 <div class="header-actions">
@@ -117,27 +117,27 @@
                             <div class="comp-item">
                                 <div class="comp-label">You</div>
                                 <div class="comp-bar-container">
-                                    <div class="comp-bar" style="width: 65%; background: var(--primary);"></div>
-                                    <span class="comp-val">380 kWh</span>
+                                    <div class="comp-bar" style="width: 0%; background: var(--primary);"></div>
+                                    <span class="comp-val">--- kWh</span>
                                 </div>
                             </div>
                             <div class="comp-item">
                                 <div class="comp-label">Efficient Homes</div>
                                 <div class="comp-bar-container">
-                                    <div class="comp-bar" style="width: 50%; background: var(--text-green);"></div>
-                                    <span class="comp-val">290 kWh</span>
+                                    <div class="comp-bar" style="width: 0%; background: var(--text-green);"></div>
+                                    <span class="comp-val">--- kWh</span>
                                 </div>
                             </div>
                             <div class="comp-item">
                                 <div class="comp-label">Average</div>
                                 <div class="comp-bar-container">
-                                    <div class="comp-bar" style="width: 80%; background: var(--text-orange);"></div>
-                                    <span class="comp-val">450 kWh</span>
+                                    <div class="comp-bar" style="width: 0%; background: var(--text-orange);"></div>
+                                    <span class="comp-val">--- kWh</span>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer">
-                            <p>You use <strong>15% less</strong> than average homes in your area.</p>
+                            <p>Upload a bill to see peer comparison.</p>
                         </div>
                     </div>
 
@@ -145,33 +145,14 @@
                     <div class="card insights-card">
                         <h2>Key Insights</h2>
                         <div class="insight-list">
-                            <div class="insight-entry">
-                                <i class="ph-bold ph-trend-up red"></i>
-                                <div>
-                                    <strong>Rising Trend</strong>
-                                    <span>AC usage is up 12% from last week due to heat wave.</span>
-                                </div>
-                            </div>
-                            <div class="insight-entry">
-                                <i class="ph-bold ph-lightbulb green"></i>
-                                <div>
-                                    <strong>Saving Opportunity</strong>
-                                    <span>Shift dishwasher use to morning hours to save ₹120.</span>
-                                </div>
-                            </div>
-                            <div class="insight-entry">
-                                <i class="ph-bold ph-check-circle-panel blue"></i>
-                                <div>
-                                    <strong>Efficiency Win</strong>
-                                    <span>New LED lighting reduced kitchen usage by 40%.</span>
-                                </div>
-                            </div>
+                            <div class="empty-state" style="padding: 20px; color: var(--text-secondary);">Analyze a bill to see smart insights.</div>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
+    <script src="billAnalyzer.js"></script>
     <script src="analytics.js"></script>
 </body>
 

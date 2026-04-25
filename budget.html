@@ -72,6 +72,57 @@
                         <h1>Budget Awareness</h1>
                         <p>Managing your electricity expenses</p>
                     </div>
+                    <div class="bill-analysis-btn">
+                        <label for="billUpload" class="btn-primary" style="cursor: pointer;">
+                            <i class="ph-bold ph-file-arrow-up"></i>
+                            Analyze New Bill
+                        </label>
+                        <input type="file" id="billUpload" accept="image/*" style="display: none;">
+                    </div>
+                </div>
+
+                <!-- Analysis Loading Overlay -->
+                <div id="analysisOverlay" class="analysis-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 1000; flex-direction: column; align-items: center; justify-content: center; color: white;">
+                    <i class="ph-bold ph-spinner-gap animate-spin" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                    <p style="font-size: 1.2rem; font-weight: 500;">Gemini AI is analyzing your bill...</p>
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Extracting usage, costs, and insights</span>
+                </div>
+
+                <!-- Data Correction Modal -->
+                <div id="dataModal" class="analysis-overlay" style="display: none;">
+                    <div class="overlay-content modal-content">
+                        <div class="modal-header">
+                            <div class="icon-box safe"><i class="ph-bold ph-check-circle"></i></div>
+                            <div>
+                                <h3>Verify Bill Details</h3>
+                                <p>We extracted these details. Please correct if needed.</p>
+                            </div>
+                        </div>
+                        <form id="billForm" class="bill-form">
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Customer Name</label>
+                                    <input type="text" id="formName" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Bill Period</label>
+                                    <input type="text" id="formPeriod" placeholder="Jan 2024" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Units Consumed (kWh)</label>
+                                    <input type="number" id="formUnits" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total Amount (₹)</label>
+                                    <input type="number" id="formAmount" required>
+                                </div>
+                            </div>
+                            <div class="modal-actions">
+                                <button type="button" class="btn-outline" id="closeModal">Cancel</button>
+                                <button type="submit" class="btn-primary">Save & Sync Dashboard</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
 
                 <div class="budget-grid">
@@ -111,15 +162,15 @@
                         <div class="breakdown">
                             <div class="break-item">
                                 <span>Fixed Charges</span>
-                                <span>₹ 250</span>
+                                <span id="fixedChargesVal">₹ ---</span>
                             </div>
                             <div class="break-item">
-                                <span>Energy Used (285 kWh)</span>
-                                <span>₹ 3,420</span>
+                                <span id="energyLabel">Energy Used (--- kWh)</span>
+                                <span id="energyChargesVal">₹ ---</span>
                             </div>
                             <div class="break-item">
                                 <span>Taxes & Cess</span>
-                                <span>₹ 580</span>
+                                <span id="taxesVal">₹ ---</span>
                             </div>
                         </div>
                     </div>
@@ -164,37 +215,17 @@
                     <div class="card history-card">
                         <div class="card-header">
                             <h2>Billing History</h2>
-                            <button class="text-link">Full History</button>
+                            <button class="btn-text-small" id="clearHistoryBtn" style="background: none; border: none; color: var(--text-red); font-weight: 600; cursor: pointer; font-size: 0.8rem;">Clear History</button>
                         </div>
-                        <div class="history-list">
-                            <div class="history-item">
-                                <div class="date-box">
-                                    <strong>JAN</strong>
-                                    <span>2024</span>
-                                </div>
-                                <div class="bill-info">
-                                    <strong>₹ 4,120.00</strong>
-                                    <span>342 units consumed</span>
-                                </div>
-                                <button class="btn-icon"><i class="ph-bold ph-download-simple"></i></button>
-                            </div>
-                            <div class="history-item">
-                                <div class="date-box">
-                                    <strong>DEC</strong>
-                                    <span>2023</span>
-                                </div>
-                                <div class="bill-info">
-                                    <strong>₹ 5,850.00</strong>
-                                    <span>480 units consumed</span>
-                                </div>
-                                <button class="btn-icon"><i class="ph-bold ph-download-simple"></i></button>
-                            </div>
+                        <div class="history-list" id="historyList">
+                            <div class="empty-state" style="padding: 20px; text-align: center; color: var(--text-secondary);">No bills analyzed yet.</div>
                         </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
+    <script src="billAnalyzer.js"></script>
     <script src="budget.js"></script>
 </body>
 

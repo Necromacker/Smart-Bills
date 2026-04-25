@@ -750,6 +750,28 @@ body {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+.btn-danger {
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background-color: var(--text-red);
+    color: white;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(238, 93, 80, 0.4);
+}
+
 .privacy-small {
     font-size: 11px;
     text-align: center;
@@ -787,6 +809,10 @@ body {
 
 .dot.blue {
     background-color: var(--primary);
+}
+
+.dot.yellow {
+    background-color: #fab005;
 }
 
 .dot.green {
