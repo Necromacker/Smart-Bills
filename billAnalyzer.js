@@ -1,4 +1,4 @@
-const GEMINI_API_KEY = localStorage.getItem('GEMINI_API_KEY') || 'AIzaSyC_dia765zGP-QT92Gr4lZNpGZa4OyLpcI';
+const GEMINI_API_KEY = localStorage.getItem('GEMINI_API_KEY') || 'AIzaSyAIH1NWye2hQ_Mdzv234vaejpCeMUMMjYs';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`;
 
 async function analyzeBill(file) {
