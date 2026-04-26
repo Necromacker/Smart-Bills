@@ -65,13 +65,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             try {
                 currentAnalysis = await analyzeBill(file);
-                
+
                 // Populate Modal
                 document.getElementById('formName').value = currentAnalysis.customer_name || '';
                 document.getElementById('formUnits').value = currentAnalysis.units_consumed || '';
                 document.getElementById('formAmount').value = currentAnalysis.total_amount || '';
                 document.getElementById('formPeriod').value = currentAnalysis.bill_period || '';
-                
+
                 if (dataModal) dataModal.style.display = 'flex';
             } catch (error) {
                 alert('Error analyzing bill. Please try again.');
@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (billForm) {
         billForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            
+
             const updatedData = {
                 ...currentAnalysis,
                 customer_name: document.getElementById('formName').value,
@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUI() {
         const lastBill = JSON.parse(localStorage.getItem('volttrack-last-bill'));
         const budget = parseFloat(localStorage.getItem('volttrack-budget') || 5000);
-        
+
         const predictionVal = document.querySelector('.expected .val');
         const fixedCharges = document.getElementById('fixedChargesVal');
         const energyCharges = document.getElementById('energyChargesVal');
@@ -148,14 +148,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const weekBars = document.querySelectorAll('.week-bar');
             const weekVals = document.querySelectorAll('.week-val');
             const totalAmount = lastBill.total_amount;
-            const weekDistribution = [0.2, 0.25, 0.35, 0.2]; 
-            
+            const weekDistribution = [0.2, 0.25, 0.35, 0.2];
+
             weekBars.forEach((bar, i) => {
                 const weekRatio = weekDistribution[i];
                 const weekAmount = (totalAmount * weekRatio).toFixed(0);
                 const weekTarget = budget / 4;
                 const percentage = (weekAmount / weekTarget) * 100;
-                
+
                 bar.style.width = `${Math.min(percentage, 100)}%`;
                 bar.style.background = percentage > 100 ? 'var(--text-red)' : percentage > 80 ? 'var(--text-orange)' : 'var(--text-green)';
                 if (weekVals[i]) weekVals[i].textContent = `₹ ${weekAmount}`;

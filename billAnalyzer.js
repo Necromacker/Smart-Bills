@@ -1,5 +1,5 @@
-const GEMINI_API_KEY = 'AQ.Ab8RN6LYd8OMssD9K5v9ATDI2SwjXcu3Erk8CZK1_9vQWtHDhA';
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=${GEMINI_API_KEY}`;
+const GEMINI_API_KEY = localStorage.getItem('GEMINI_API_KEY') || 'AIzaSyC_dia765zGP-QT92Gr4lZNpGZa4OyLpcI';
+const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent`;
 
 async function analyzeBill(file) {
     try {
@@ -7,7 +7,7 @@ async function analyzeBill(file) {
         const base64Content = base64Data.split(',')[1];
         const mimeType = file.type;
 
-        const prompt = `Analyze this electricity bill image and extract the following information in strict JSON format:
+        const analysisPrompt = `Analyze this electricity bill image and extract the following information in strict JSON format:
         {
             "customer_name": "Full Name",
             "bill_period": "Month Year",
@@ -29,13 +29,18 @@ async function analyzeBill(file) {
         }
         Provide ONLY the JSON object. Do not include markdown code blocks or extra text. If a field is missing, use null.`;
 
+        console.log(`[BillAnalyzer] Using API Key: ${GEMINI_API_KEY.substring(0, 10)}...`);
+
         const response = await fetch(GEMINI_API_URL, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'X-goog-api-key': GEMINI_API_KEY
+            },
             body: JSON.stringify({
                 contents: [{
                     parts: [
-                        { text: prompt },
+                        { text: analysisPrompt },
                         { inline_data: { mime_type: mimeType, data: base64Content } }
                     ]
                 }]
@@ -44,7 +49,17 @@ async function analyzeBill(file) {
 
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.error?.message || 'Bill analysis failed');
+            let msg = error.error?.message || 'Bill analysis failed';
+
+            if (response.status === 400 || response.status === 403) {
+                const newKey = window.prompt('Your API Key is invalid or restricted. Please paste a fresh Gemini API Key here:');
+                if (newKey) {
+                    localStorage.setItem('GEMINI_API_KEY', newKey);
+                    alert('API Key updated! Please try analyzing the bill again.');
+                    location.reload();
+                }
+            }
+            throw new Error(msg);
         }
 
         const data = await response.json();
@@ -86,14 +101,14 @@ function fileToBase64(file) {
 
 function saveBillData(data) {
     if (!data) return;
-    
+
     // Save current bill
     localStorage.setItem('volttrack-last-bill', JSON.stringify(data));
 
     // Add to history if not already present
     let history = JSON.parse(localStorage.getItem('volttrack-bill-history') || '[]');
     const exists = history.some(h => h.date === data.bill_period && h.amount === data.total_amount);
-    
+
     if (!exists) {
         history.unshift({
             id: Date.now(),
